@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Designed by Anmol Kumar Jha – Explore Incredible India</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ===== CSS VARIABLES ===== */
+  :root {
+    --bg: #fdf6ee;
+    --bg2: #fff8f0;
+    --surface: #ffffff;
+    --surface2: #fef3e2;
+    --text: #1a1208;
+    --text2: #5c4a2a;
+    --text3: #9c7c4a;
+    --accent: #c8541a;
+    --accent2: #e8851a;
+    --accent3: #2a7a4a;
+    --gold: #d4a017;
+    --border: #e8d5b0;
+    --shadow: rgba(60,30,0,0.12);
+    --shadow2: rgba(60,30,0,0.22);
+    --card-bg: #ffffff;
+    --nav-bg: rgba(253,246,238,0.95);
+    --map-fill: #c8e6c9;
+    --map-hover: #e8851a;
+    --map-stroke: #ffffff;
+    --overlay: rgba(0,0,0,0.45);
+  }
+  [data-theme="dark"] {
+    --bg: #0e0a04;
+    --bg2: #181008;
+    --surface: #1e1408;
+    --surface2: #2a1e0e;
+    --text: #f5e8d0;
+    --text2: #c4a878;
+    --text3: #8a6a38;
+    --accent: #e8651a;
+    --accent2: #f09030;
+    --accent3: #3a9a5a;
+    --gold: #e4b827;
+    --border: #3a2a14;
+    --shadow: rgba(0,0,0,0.4);
+    --shadow2: rgba(0,0,0,0.6);
+    --card-bg: #1e1408;
+    --nav-bg: rgba(14,10,4,0.95);
+    --map-fill: #1a3a1a;
+    --map-hover: #e8851a;
+    --map-stroke: #3a2a14;
+    --overlay: rgba(0,0,0,0.6);
+  }
+
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent2); color: #fff; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  button { cursor: pointer; font-family: inherit; }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
+
+  /* ===== NAVBAR ===== */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+  .nav-links a {
+    padding: 0.4rem 0.85rem; border-radius: 6px;
+    font-size: 0.88rem; font-weight: 500; color: var(--text2);
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: var(--surface2); color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .search-bar {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 24px; padding: 0.35rem 0.85rem;
+    transition: all 0.3s;
+  }
+  .search-bar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,84,26,0.12); }
+  .search-bar input {
+    border: none; background: transparent; outline: none;
+    font-size: 0.85rem; color: var(--text); width: 160px;
+  }
+  .search-bar input::placeholder { color: var(--text3); }
+  .search-bar svg { color: var(--text3); flex-shrink: 0; }
+  #darkToggle {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 50%; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; transition: all 0.3s;
+  }
+  #darkToggle:hover { border-color: var(--accent); transform: rotate(20deg); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a0800 0%, #2d1000 40%, #1a3000 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 100px 2rem 4rem;
+    text-align: center;
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(200,84,26,0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(212,160,23,0.12) 0%, transparent 50%),
+                      radial-gradient(circle at 50% 50%, rgba(42,122,74,0.08) 0%, transparent 70%);
+    animation: bgPulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes bgPulse { from { opacity: 0.7; } to { opacity: 1; } }
+  .hero-mandala {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 700px; height: 700px; opacity: 0.04;
+    background: conic-gradient(from 0deg, #ff6b00, #ffd700, #00aa44, #ff6b00);
+    border-radius: 50%;
+    animation: spin 60s linear infinite;
+  }
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(200,84,26,0.2); border: 1px solid rgba(200,84,26,0.4);
+    color: #f09030; border-radius: 24px; padding: 0.35rem 1rem;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeDown 0.8s ease both;
+  }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 900;
+    color: #fff; line-height: 1.05; letter-spacing: -1px;
+    animation: fadeUp 0.9s 0.2s ease both;
+    position: relative;
+  }
+  .hero h1 .highlight { color: var(--accent2); font-style: italic; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .hero-subtitle {
+    margin-top: 1.25rem; max-width: 620px;
+    font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.7;
+    animation: fadeUp 0.9s 0.4s ease both;
+  }
+  .hero-subtitle strong { color: #f09030; }
+  .hero-cta {
+    margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.6s ease both;
+  }
+  .btn {
+    padding: 0.75rem 1.75rem; border-radius: 50px; border: none;
+    font-size: 0.9rem; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 24px rgba(200,84,26,0.4); }
+  .btn-primary:hover { background: #a03f10; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(200,84,26,0.5); }
+  .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.35); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+  .hero-stats {
+    margin-top: 4rem; display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.8s ease both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--gold); }
+  .hero-stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; }
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.4); font-size: 0.75rem; letter-spacing: 1px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* ===== SECTION STYLES ===== */
+  .section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--accent); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px;
+    margin-bottom: 0.75rem;
+  }
+  .section-tag::before { content: ''; display: block; width: 24px; height: 2px; background: var(--accent); border-radius: 1px; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900;
+    line-height: 1.15; color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .section-desc { color: var(--text2); line-height: 1.75; max-width: 560px; }
+
+  /* ===== MAP SECTION ===== */
+  #map-section { background: var(--bg2); }
+  .map-layout { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; margin-top: 3rem; }
+  #india-map-container {
+    background: var(--surface); border-radius: 20px;
+    border: 1px solid var(--border); overflow: hidden;
+    box-shadow: 0 8px 40px var(--shadow);
+    padding: 1rem;
+  }
+  #india-map-container svg { width: 100%; height: auto; }
+  #india-map-container svg path {
+    fill: var(--map-fill); stroke: var(--map-stroke); stroke-width: 1;
+    cursor: pointer; transition: fill 0.2s, filter 0.2s;
+  }
+  #india-map-container svg path:hover { fill: var(--map-hover); filter: drop-shadow(0 4px 8px rgba(200,84,26,0.4)); }
+  #india-map-container svg path.active { fill: var(--accent); }
+  .map-info-panel {
+    position: sticky; top: 80px;
+    background: var(--surface); border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 40px var(--shadow);
+    overflow: hidden;
+  }
+  .map-panel-img { height: 180px; background: linear-gradient(135deg,#1a3000,#2d5000); position: relative; overflow: hidden; }
+  .map-panel-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+  .map-panel-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+  .map-panel-name {
+    position: absolute; bottom: 1rem; left: 1.25rem;
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: #fff;
+  }
+  .map-panel-body { padding: 1.25rem; }
+  .map-panel-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.7; margin-bottom: 1rem; }
+  .map-panel-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .tag {
+    padding: 0.3rem 0.75rem; border-radius: 20px;
+    background: var(--surface2); color: var(--text2);
+    font-size: 0.75rem; font-weight: 500; border: 1px solid var(--border);
+  }
+  .btn-explore {
+    width: 100%; padding: 0.75rem; border-radius: 10px; border: none;
+    background: var(--accent); color: #fff; font-size: 0.88rem; font-weight: 600;
+    transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  }
+  .btn-explore:hover { background: #a03f10; transform: translateY(-1px); }
+  .map-default-msg { padding: 2rem; text-align: center; color: var(--text3); }
+  .map-default-msg .big-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+
+  /* ===== STATES GRID ===== */
+  #states-section { background: var(--bg); }
+  .states-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .state-card {
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card-bg);
+    box-shadow: 0 4px 20px var(--shadow);
+    cursor: pointer; transition: all 0.35s;
+  }
+  .state-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px var(--shadow2); border-color: var(--accent); }
+  .state-card-img { height: 180px; position: relative; overflow: hidden; }
+  .state-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .state-card:hover .state-card-img img { transform: scale(1.08); }
+  .state-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%); }
+  .state-card-badge {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.25); color: #fff;
+    padding: 0.25rem 0.6rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+  }
+  .state-card-name {
+    position: absolute; bottom: 0.75rem; left: 1rem;
+    font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #fff;
+  }
+  .state-card-body { padding: 1rem 1.1rem 1.25rem; }
+  .state-card-desc { font-size: 0.83rem; color: var(--text2); line-height: 1.6; margin-bottom: 0.85rem; }
+  .state-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .state-card-places { font-size: 0.75rem; color: var(--text3); }
+  .btn-sm {
+    padding: 0.4rem 0.9rem; border-radius: 20px; border: 1.5px solid var(--accent);
+    background: transparent; color: var(--accent); font-size: 0.78rem; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-sm:hover { background: var(--accent); color: #fff; }
+
+  /* ===== TOURISM DETAIL SECTION ===== */
+  #detail-section { display: none; background: var(--bg2); }
+  #detail-section.active { display: block; }
+  .detail-header {
+    background: linear-gradient(135deg, #0e2a0e, #1a4a1a, #2a1a00);
+    padding: 5rem 2rem 3rem; color: #fff; position: relative; overflow: hidden;
+  }
+  .detail-header-bg {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 70% 50%, rgba(200,84,26,0.2), transparent 60%);
+  }
+  .detail-header-inner { max-width: 1200px; margin: 0 auto; position: relative; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.7); font-size: 0.85rem; font-weight: 500;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px; padding: 0.4rem 1rem; margin-bottom: 1.5rem;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
+  .detail-state-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900;
+    line-height: 1.05; margin-bottom: 0.75rem;
+  }
+  .detail-state-tagline { color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.6; max-width: 560px; }
+  .detail-meta { display: flex; gap: 1.5rem; margin-top: 1.75rem; flex-wrap: wrap; }
+  .detail-meta-item { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.75); font-size: 0.85rem; }
+  .detail-meta-item span { background: rgba(255,255,255,0.12); border-radius: 20px; padding: 0.3rem 0.8rem; }
+
+  /* ===== TRAVEL INFO ===== */
+  .travel-info { max-width: 1200px; margin: 0 auto; padding: 3rem 0 0; }
+  .info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
+  .info-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+    padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+    box-shadow: 0 4px 16px var(--shadow);
+    transition: all 0.3s;
+  }
+  .info-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px var(--shadow2); }
+  .info-icon { font-size: 2rem; flex-shrink: 0; }
+  .info-label { font-size: 0.75rem; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.4rem; }
+  .info-value { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+  .info-sub { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+
+  /* ===== PLACES GRID ===== */
+  .places-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2rem; }
+  .place-card {
+    background: var(--card-bg); border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--border); box-shadow: 0 6px 24px var(--shadow);
+    transition: all 0.35s;
+  }
+  .place-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px var(--shadow2); }
+  .place-card-gallery { position: relative; height: 240px; overflow: hidden; }
+  .gallery-slides { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease; }
+  .gallery-slide { flex-shrink: 0; width: 100%; height: 100%; }
+  .gallery-slide img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-controls {
+    position: absolute; bottom: 0.75rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 0.4rem;
+  }
+  .gallery-dot {
+    width: 6px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.5);
+    border: none; transition: all 0.3s; padding: 0;
+  }
+  .gallery-dot.active { background: #fff; width: 18px; }
+  .gallery-btn-prev, .gallery-btn-next {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.4); color: #fff; border: none; border-radius: 50%;
+    width: 32px; height: 32px; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-btn-prev { left: 0.75rem; }
+  .gallery-btn-next { right: 0.75rem; }
+  .place-card:hover .gallery-btn-prev, .place-card:hover .gallery-btn-next { opacity: 1; }
+  .place-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%); }
+  .place-card-category {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--accent); color: #fff; padding: 0.25rem 0.75rem; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .place-card-title {
+    position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #fff;
+  }
+  .place-card-body { padding: 1.25rem 1.35rem 1.5rem; }
+  .place-card-desc { font-size: 0.86rem; color: var(--text2); line-height: 1.7; margin-bottom: 1.25rem; }
+  .place-card-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .btn-maps {
+    padding: 0.55rem 1.1rem; border-radius: 8px; border: none;
+    background: var(--accent); color: #fff; font-size: 0.82rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s;
+  }
+  .btn-maps:hover { background: #a03f10; transform: translateY(-1px); }
+  .like-dislike { display: flex; gap: 0.4rem; }
+  .btn-like, .btn-dislike {
+    padding: 0.45rem 0.8rem; border-radius: 8px; border: 1.5px solid var(--border);
+    background: transparent; font-size: 0.8rem; transition: all 0.2s; display: flex; align-items: center; gap: 0.3rem;
+    color: var(--text2);
+  }
+  .btn-like:hover, .btn-like.active { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+  .btn-dislike:hover, .btn-dislike.active { background: #fce4ec; border-color: #e57373; color: #c62828; }
+  [data-theme="dark"] .btn-like:hover, [data-theme="dark"] .btn-like.active { background: #1a3a1a; }
+  [data-theme="dark"] .btn-dislike:hover, [data-theme="dark"] .btn-dislike.active { background: #3a1010; }
+  .btn-visit {
+    margin-left: auto; padding: 0.45rem 1rem; border-radius: 8px; border: 1.5px solid var(--accent2);
+    background: transparent; color: var(--accent2); font-size: 0.78rem; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-visit:hover, .btn-visit.visited { background: var(--accent2); color: #fff; }
+  .btn-visit.want { border-color: var(--accent3); color: var(--accent3); }
+  .btn-visit.want:hover, .btn-visit.want.active { background: var(--accent3); color: #fff; }
+
+  /* ===== COMMENT SECTION ===== */
+  .comment-section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .comment-section h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.25rem; }
+  .comment-form { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .comment-input {
+    flex: 1; padding: 0.75rem 1rem; border-radius: 10px;
+    border: 1.5px solid var(--border); background: var(--surface);
+    color: var(--text); font-size: 0.9rem; font-family: inherit; outline: none;
+    transition: border-color 0.2s;
+  }
+  .comment-input:focus { border-color: var(--accent); }
+  .btn-comment {
+    padding: 0.75rem 1.25rem; border-radius: 10px; border: none;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+  .btn-comment:hover { background: #a03f10; }
+  .comments-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .comment-item {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.9rem 1rem; display: flex; gap: 0.75rem;
+    animation: fadeUp 0.3s ease;
+  }
+  .comment-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 0.9rem;
+  }
+  .comment-content .comment-author { font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 0.2rem; }
+  .comment-content .comment-text { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #0a0600; color: rgba(255,255,255,0.7);
+    padding: 4rem 2rem 2rem;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 0.75rem; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; margin-bottom: 1.25rem; }
+  .footer-heading { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 1rem; font-weight: 600; }
+  .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-links a { font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent2); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+    gap: 1rem;
+  }
+  .footer-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: #fff; margin-bottom: 0.75rem;
+  }
+  .footer-like-btns { display: flex; gap: 0.75rem; align-items: center; }
+  .footer-btn {
+    padding: 0.6rem 1.25rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600;
+    border: 1.5px solid; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem;
+  }
+  .footer-btn-like { border-color: #4caf50; color: #4caf50; background: transparent; }
+  .footer-btn-like:hover { background: #4caf50; color: #fff; }
+  .footer-btn-dislike { border-color: #e57373; color: #e57373; background: transparent; }
+  .footer-btn-dislike:hover { background: #e57373; color: #fff; }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.35); text-align: right; }
+
+  /* ===== SEARCH RESULTS DROPDOWN ===== */
+  .search-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; box-shadow: 0 12px 40px var(--shadow2);
+    width: 280px; overflow: hidden; z-index: 999;
+    display: none;
+  }
+  .search-dropdown.open { display: block; }
+  .search-result-item {
+    padding: 0.75rem 1rem; cursor: pointer; display: flex; align-items: center; gap: 0.75rem;
+    transition: background 0.2s;
+  }
+  .search-result-item:hover { background: var(--surface2); }
+  .search-result-img {
+    width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0;
+  }
+  .search-result-name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+  .search-result-sub { font-size: 0.75rem; color: var(--text3); }
+  .search-no-results { padding: 1rem; text-align: center; color: var(--text3); font-size: 0.85rem; }
+  .nav-search-wrapper { position: relative; }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+    background: var(--accent); color: #fff; padding: 0.85rem 1.5rem;
+    border-radius: 10px; font-size: 0.88rem; font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    transform: translateY(100px); opacity: 0; transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ===== MOBILE NAV ===== */
+  .mobile-nav {
+    display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 999;
+    background: var(--nav-bg); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border); padding: 1rem;
+    flex-direction: column; gap: 0.25rem;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a { padding: 0.75rem 1rem; border-radius: 8px; font-weight: 500; color: var(--text2); }
+  .mobile-nav a:hover { background: var(--surface2); color: var(--accent); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .map-layout { grid-template-columns: 1fr; }
+    .map-info-panel { position: static; }
+    .info-cards { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .search-bar { display: none; }
+  }
+  @media (max-width: 600px) {
+    .section { padding: 4rem 1.25rem; }
+    .places-grid { grid-template-columns: 1fr; }
+    .states-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .place-card-actions { flex-wrap: wrap; }
+    .btn-visit { margin-left: 0; }
+  }
+
+  /* ===== UTILITY ===== */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">🇮🇳 <span>Incredible</span> India</div>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#map-section">Map</a>
+    <a href="#states-section">States</a>
+    <a href="#detail-section">Explore</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-search-wrapper">
+      <div class="search-bar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Search states..." autocomplete="off">
+      </div>
+      <div class="search-dropdown" id="searchDropdown"></div>
+    </div>
+    <button id="darkToggle" title="Toggle dark mode">🌙</button>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#hero" onclick="closeMobileNav()">🏠 Home</a>
+  <a href="#map-section" onclick="closeMobileNav()">🗺️ Map</a>
+  <a href="#states-section" onclick="closeMobileNav()">🏛️ States</a>
+  <a href="#detail-section" onclick="closeMobileNav()">🔍 Explore</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-mandala"></div>
+  <div class="hero">
+    <div class="hero-badge">✦ Official Tourism Guide</div>
+    <h1>Explore <span class="highlight">Incredible</span><br>India</h1>
+    <p class="hero-subtitle">
+      This website is designed by <strong>Anmol Kumar Jha</strong> for exploring special locations of India — from majestic temples to serene lakes, ancient monuments to vibrant cultures.
+    </p>
+    <div class="hero-cta">
+      <a href="#map-section" class="btn btn-primary">🗺️ Explore the Map</a>
+      <a href="#states-section" class="btn btn-outline">✈️ Browse States</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">28</div><div class="hero-stat-label">States</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">Union Territories</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">40+</div><div class="hero-stat-label">UNESCO Sites</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">∞</div><div class="hero-stat-label">Memories</div></div>
+    </div>
+  </div>
+  <div class="scroll-indicator">↓ SCROLL</div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="section" id="map-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Interactive</div>
+      <h2 class="section-title">Discover India on the Map</h2>
+      <p class="section-desc">Hover over any state to learn about it. Click to explore its tourism hotspots, famous places, and travel tips.</p>
+    </div>
+    <div class="map-layout reveal">
+      <div id="india-map-container">
+        <!-- Simplified India SVG Map -->
+        <svg viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" id="indiaMap">
+          <!-- Jammu & Kashmir -->
+          <path id="map-jk" data-state="jammu-kashmir" data-name="Jammu & Kashmir" title="Jammu & Kashmir"
+            d="M180,30 L260,20 L330,50 L340,100 L310,130 L280,150 L240,160 L200,140 L170,110 L160,70 Z"/>
+          <!-- Himachal Pradesh -->
+          <path id="map-hp" data-state="himachal" data-name="Himachal Pradesh"
+            d="M240,160 L310,130 L340,100 L370,130 L360,170 L320,200 L280,210 L250,195 Z"/>
+          <!-- Punjab -->
+          <path id="map-pb" data-state="punjab" data-name="Punjab"
+            d="M180,140 L240,160 L250,195 L220,220 L190,215 L165,190 L160,165 Z"/>
+          <!-- Uttarakhand -->
+          <path id="map-uk" data-state="uttarakhand" data-name="Uttarakhand"
+            d="M310,130 L370,130 L390,160 L370,200 L340,210 L320,200 L360,170 Z"/>
+          <!-- Haryana -->
+          <path id="map-hr" data-state="haryana" data-name="Haryana"
+            d="M190,215 L220,220 L250,195 L280,210 L290,240 L260,270 L220,265 L195,245 Z"/>
+          <!-- Delhi -->
+          <path id="map-dl" data-state="delhi" data-name="Delhi"
+            d="M255,235 L272,228 L278,246 L263,255 Z"/>
+          <!-- Rajasthan -->
+          <path id="map-rj" data-state="rajasthan" data-name="Rajasthan"
+            d="M120,220 L190,215 L195,245 L220,265 L260,270 L280,310 L270,360 L240,390 L190,400 L140,370 L110,320 L100,270 Z"/>
+          <!-- Uttar Pradesh -->
+          <path id="map-up" data-state="uttar-pradesh" data-name="Uttar Pradesh"
+            d="M260,270 L290,240 L340,210 L370,200 L410,220 L440,250 L450,300 L420,340 L380,360 L330,365 L280,360 L270,360 Z"/>
+          <!-- Bihar -->
+          <path id="map-br" data-state="bihar" data-name="Bihar"
+            d="M410,220 L460,210 L510,230 L520,270 L490,310 L450,320 L420,340 L440,250 Z"/>
+          <!-- Sikkim -->
+          <path id="map-sk" data-state="sikkim" data-name="Sikkim"
+            d="M520,200 L540,195 L548,215 L528,220 Z"/>
+          <!-- Arunachal Pradesh -->
+          <path id="map-ar" data-state="arunachal" data-name="Arunachal Pradesh"
+            d="M548,175 L650,160 L680,185 L660,215 L600,225 L548,215 L540,195 Z"/>
+          <!-- Assam -->
+          <path id="map-as" data-state="assam" data-name="Assam"
+            d="M548,215 L600,225 L660,215 L670,240 L640,265 L600,270 L560,260 L528,245 Z"/>
+          <!-- Nagaland -->
+          <path id="map-nl" data-state="nagaland" data-name="Nagaland"
+            d="M640,265 L670,255 L680,280 L655,295 L635,285 Z"/>
+          <!-- Manipur -->
+          <path id="map-mn" data-state="manipur" data-name="Manipur"
+            d="M635,285 L655,295 L660,320 L635,335 L615,315 L620,295 Z"/>
+          <!-- Mizoram -->
+          <path id="map-mz" data-state="mizoram" data-name="Mizoram"
+            d="M615,335 L635,335 L640,360 L618,375 L600,355 Z"/>
+          <!-- Tripura -->
+          <path id="map-tr" data-state="tripura" data-name="Tripura"
+            d="M595,315 L615,315 L620,340 L600,355 L585,340 Z"/>
+          <!-- Meghalaya -->
+          <path id="map-ml" data-state="meghalaya" data-name="Meghalaya"
+            d="M528,265 L560,260 L580,270 L580,295 L555,305 L528,295 Z"/>
+          <!-- West Bengal -->
+          <path id="map-wb" data-state="west-bengal" data-name="West Bengal"
+            d="M490,310 L528,295 L555,305 L560,340 L540,380 L510,400 L490,380 L480,350 L470,330 Z"/>
+          <!-- Jharkhand -->
+          <path id="map-jh" data-state="jharkhand" data-name="Jharkhand"
+            d="M450,320 L490,310 L470,330 L480,350 L460,370 L435,360 L420,340 Z"/>
+          <!-- Odisha -->
+          <path id="map-or" data-state="odisha" data-name="Odisha"
+            d="M460,370 L480,350 L510,400 L520,440 L500,480 L470,490 L445,465 L435,430 L440,400 Z"/>
+          <!-- Madhya Pradesh -->
+          <path id="map-mp" data-state="madhya-pradesh" data-name="Madhya Pradesh"
+            d="M240,390 L270,360 L330,365 L380,360 L420,340 L435,360 L440,400 L420,430 L390,450 L340,455 L290,440 L260,415 Z"/>
+          <!-- Chhattisgarh -->
+          <path id="map-ct" data-state="chhattisgarh" data-name="Chhattisgarh"
+            d="M390,450 L420,430 L440,400 L445,465 L430,500 L405,510 L380,490 L370,465 Z"/>
+          <!-- Gujarat -->
+          <path id="map-gj" data-state="gujarat" data-name="Gujarat"
+            d="M80,290 L120,280 L140,370 L130,420 L110,450 L80,440 L60,400 L55,350 L70,310 Z"/>
+          <!-- Maharashtra -->
+          <path id="map-mh" data-state="maharashtra" data-name="Maharashtra"
+            d="M140,370 L190,400 L240,390 L260,415 L290,440 L310,460 L300,500 L270,530 L230,545 L190,530 L155,500 L130,460 L130,420 Z"/>
+          <!-- Telangana -->
+          <path id="map-tg" data-state="telangana" data-name="Telangana"
+            d="M310,460 L370,465 L380,490 L370,530 L340,550 L300,540 L270,530 L300,500 Z"/>
+          <!-- Andhra Pradesh -->
+          <path id="map-ap" data-state="andhra-pradesh" data-name="Andhra Pradesh"
+            d="M370,465 L405,510 L430,500 L450,530 L440,570 L410,600 L380,610 L340,595 L300,570 L295,545 L340,550 L370,530 Z"/>
+          <!-- Karnataka -->
+          <path id="map-ka" data-state="karnataka" data-name="Karnataka"
+            d="M230,545 L270,530 L300,540 L295,545 L300,570 L280,610 L250,640 L215,640 L190,610 L185,570 L195,545 Z"/>
+          <!-- Goa -->
+          <path id="map-ga" data-state="goa" data-name="Goa"
+            d="M188,555 L200,550 L210,565 L196,572 Z"/>
+          <!-- Kerala -->
+          <path id="map-kl" data-state="kerala" data-name="Kerala"
+            d="M215,640 L250,640 L245,680 L225,720 L205,740 L195,710 L200,670 Z"/>
+          <!-- Tamil Nadu -->
+          <path id="map-tn" data-state="tamil-nadu" data-name="Tamil Nadu"
+            d="M280,610 L340,595 L380,610 L390,650 L370,700 L340,730 L310,740 L280,720 L260,680 L250,640 L280,640 Z"/>
+          <!-- Sikkim (small) already done above -->
+
+          <!-- State labels (representative) -->
+          <text x="245" y="85" font-size="9" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">J&K</text>
+          <text x="230" y="198" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">HP</text>
+          <text x="200" y="185" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">PB</text>
+          <text x="195" y="305" font-size="9" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Rajasthan</text>
+          <text x="355" y="305" font-size="9" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">U.P.</text>
+          <text x="460" y="272" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Bihar</text>
+          <text x="492" y="427" font-size="9" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Odisha</text>
+          <text x="340" y="415" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">M.P.</text>
+          <text x="100" y="385" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Guj</text>
+          <text x="210" y="475" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Maharashtra</text>
+          <text x="620" y="215" font-size="7" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Assam</text>
+          <text x="490" y="445" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">WB</text>
+          <text x="320" y="500" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Telangana</text>
+          <text x="393" y="545" font-size="7.5" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Andhra</text>
+          <text x="242" y="590" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Karnataka</text>
+          <text x="224" y="685" font-size="8" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Kerala</text>
+          <text x="320" y="675" font-size="8.5" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Tamil Nadu</text>
+          <text x="340" y="210" font-size="7" fill="#1a5a1a" font-family="DM Sans" font-weight="600" text-anchor="middle" pointer-events="none">Uttarakhand</text>
+        </svg>
+      </div>
+
+      <!-- Info Panel -->
+      <div class="map-info-panel" id="mapInfoPanel">
+        <div id="mapPanelDefault" class="map-default-msg">
+          <div class="big-icon">🗺️</div>
+          <strong>Click on any state</strong>
+          <p style="font-size:0.82rem;margin-top:0.5rem;color:var(--text3)">Hover to highlight · Click to explore tourism</p>
+        </div>
+        <div id="mapPanelContent" style="display:none">
+          <div class="map-panel-img" id="mapPanelImgWrap">
+            <img id="mapPanelImg" src="" alt="">
+            <div class="map-panel-img-overlay"></div>
+            <div class="map-panel-name" id="mapPanelName"></div>
+          </div>
+          <div class="map-panel-body">
+            <p class="map-panel-desc" id="mapPanelDesc"></p>
+            <div class="map-panel-tags" id="mapPanelTags"></div>
+            <button class="btn-explore" id="mapPanelBtn">Explore Tourism ↗</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATES SECTION -->
+<section class="section" id="states-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">Destinations</div>
+      <h2 class="section-title">Featured States</h2>
+      <p class="section-desc">Discover the rich cultural tapestry, natural wonders, and architectural marvels across India's vibrant states.</p>
+    </div>
+    <div class="states-grid" id="statesGrid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- TOURISM DETAIL SECTION -->
+<section class="section" id="detail-section">
+  <div class="detail-header">
+    <div class="detail-header-bg"></div>
+    <div class="detail-header-inner">
+      <button class="back-btn" onclick="closeDetail()">← Back to States</button>
+      <div class="detail-state-name" id="detailStateName">Odisha</div>
+      <div class="detail-state-tagline" id="detailStateTagline">The Soul of Incredible India</div>
+      <div class="detail-meta" id="detailMeta"></div>
+    </div>
+  </div>
+  <div class="section-inner" style="padding-top:0">
+    <!-- Travel Info -->
+    <div class="travel-info">
+      <div class="info-cards" id="infoCards"></div>
+      <!-- Places -->
+      <div class="reveal">
+        <div class="section-tag">Famous Places</div>
+        <h2 class="section-title" id="placesTitle">Must-Visit Destinations</h2>
+      </div>
+      <div class="places-grid" id="placesGrid" style="margin-top:2rem"></div>
+      <!-- Comments -->
+      <div class="comment-section reveal" id="commentSection">
+        <h3>💬 Traveller Reviews</h3>
+        <div class="comment-form">
+          <input class="comment-input" id="commentInput" type="text" placeholder="Share your experience about this state...">
+          <button class="btn-comment" onclick="addComment()">Post</button>
+        </div>
+        <div class="comments-list" id="commentsList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>🇮🇳 Incredible India</h2>
+        <p>Designed with ❤️ by <strong style="color:var(--gold)">Anmol Kumar Jha</strong> to help travellers discover the beauty, culture, and heritage of India.</p>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+          <span class="tag">Tourism Guide</span>
+          <span class="tag">Cultural Heritage</span>
+          <span class="tag">Travel Tips</span>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Quick Links</div>
+        <div class="footer-links">
+          <a href="#hero">🏠 Home</a>
+          <a href="#map-section">🗺️ Interactive Map</a>
+          <a href="#states-section">🏛️ Browse States</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Featured States</div>
+        <div class="footer-links">
+          <a onclick="loadState('odisha')" style="cursor:pointer">🌊 Odisha</a>
+          <a onclick="loadState('rajasthan')" style="cursor:pointer">🏰 Rajasthan</a>
+          <a onclick="loadState('kerala')" style="cursor:pointer">🌴 Kerala</a>
+          <a onclick="loadState('goa')" style="cursor:pointer">🏖️ Goa</a>
+          <a onclick="loadState('tamil-nadu')" style="cursor:pointer">🛕 Tamil Nadu</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        <div class="footer-question">Can this website help you?</div>
+        <div class="footer-like-btns">
+          <button class="footer-btn footer-btn-like" onclick="footerVote('like',this)">👍 Yes, it helped!</button>
+          <button class="footer-btn footer-btn-dislike" onclick="footerVote('dislike',this)">👎 Needs improvement</button>
+        </div>
+      </div>
+      <div class="footer-copy">
+        © 2025 Designed by Anmol Kumar Jha<br>
+        Explore Incredible India
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== DATA =====
+const statesData = {
+  'odisha': {
+    name: 'Odisha',
+    tagline: 'The Soul of Incredible India',
+    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    desc: 'Odisha, on India\'s eastern coast, is a treasure trove of ancient temples, vibrant festivals, pristine beaches and tribal culture.',
+    tags: ['Temples', 'Beaches', 'Wildlife', 'Tribal Culture'],
+    bestTime: 'October – March',
+    budget: '₹3,000 – ₹8,000/day',
+    food: 'Dalma, Pakhala, Chenna Poda, Rasagola',
+    capital: 'Bhubaneswar',
+    language: 'Odia',
+    places: [
+      {
+        name: 'Jagannath Temple, Puri',
+        category: 'Temple',
+        desc: 'One of the Char Dham pilgrimage sites, the Jagannath Temple is a magnificent 12th-century Hindu temple dedicated to Lord Jagannath. Its annual Rath Yatra chariot festival draws millions of devotees worldwide and is a UNESCO recognized tradition of outstanding value.',
+        imgs: [
+          'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+          'https://images.unsplash.com/photo-1609766857871-6ed3e5a2f10e?w=800&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'
+        ],
+        location: 'Puri, Odisha',
+        maps: 'https://maps.google.com/?q=Jagannath+Temple+Puri+Odisha'
+      },
+      {
+        name: 'Konark Sun Temple',
+        category: 'UNESCO Heritage',
+        desc: 'A masterpiece of 13th-century Odishan architecture, the Konark Sun Temple is built in the shape of a colossal chariot with 24 intricately carved stone wheels, drawn by seven horses. It is dedicated to the Sun god Surya and is a UNESCO World Heritage Site.',
+        imgs: [
+          'https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=800&q=80',
+          'https://images.unsplash.com/photo-1609766857871-6ed3e5a2f10e?w=800&q=80',
+          'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80'
+        ],
+        location: 'Konark, Odisha',
+        maps: 'https://maps.google.com/?q=Konark+Sun+Temple+Odisha'
+      },
+      {
+        name: 'Chilika Lake',
+        category: 'Nature & Wildlife',
+        desc: 'Asia\'s largest brackish water lagoon, Chilika Lake spans over 1,100 sq km and is a haven for migratory birds including flamingos and Irrawaddy dolphins. The Nalabana Island at its heart is a protected bird sanctuary attracting birdwatchers from across the world.',
+        imgs: [
+          'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80',
+          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+          'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80'
+        ],
+        location: 'Puri/Khordha District, Odisha',
+        maps: 'https://maps.google.com/?q=Chilika+Lake+Odisha'
+      },
+      {
+        name: 'Lingaraja Temple',
+        category: 'Temple',
+        desc: 'The Lingaraja Temple in Bhubaneswar is one of the finest examples of Kalinga architecture, standing 55 metres tall. This 11th-century temple dedicated to Harihara (Shiva-Vishnu) is the largest temple in Bhubaneswar and an iconic landmark of Odisha.',
+        imgs: [
+          'https://images.unsplash.com/photo-1609766857871-6ed3e5a2f10e?w=800&q=80',
+          'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'
+        ],
+        location: 'Bhubaneswar, Odisha',
+        maps: 'https://maps.google.com/?q=Lingaraja+Temple+Bhubaneswar'
+      }
+    ],
+    comments: ['Just visited Konark Sun Temple – absolutely stunning architecture! 🌟', 'Chilika Lake at sunrise is breathtaking. Highly recommended!']
+  },
+  'rajasthan': {
+    name: 'Rajasthan',
+    tagline: 'The Land of Kings',
+    img: 'https://images.unsplash.com/photo-1477587458883-47145ed31bfb?w=600&q=80',
+    desc: 'Rajasthan dazzles with its majestic forts, opulent palaces, vibrant bazaars, and the golden Thar Desert.',
+    tags: ['Forts', 'Palaces', 'Desert', 'Culture'],
+    bestTime: 'October – February',
+    budget: '₹4,000 – ₹15,000/day',
+    food: 'Dal Baati Churma, Ghevar, Laal Maas, Ker Sangri',
+    capital: 'Jaipur',
+    language: 'Hindi, Rajasthani',
+    places: [
+      {
+        name: 'Amber Fort, Jaipur',
+        category: 'UNESCO Heritage',
+        desc: 'Perched atop a rugged hill, Amber Fort is a breathtaking blend of Rajput and Mughal architecture. The fort\'s Sheesh Mahal (Hall of Mirrors) is particularly famous, with tiny mirror pieces that reflect light like a thousand stars.',
+        imgs: [
+          'https://images.unsplash.com/photo-1477587458883-47145ed31bfb?w=800&q=80',
+          'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'
+        ],
+        location: 'Jaipur, Rajasthan',
+        maps: 'https://maps.google.com/?q=Amber+Fort+Jaipur'
+      },
+      {
+        name: 'Mehrangarh Fort, Jodhpur',
+        category: 'Fort',
+        desc: 'Rising 410 feet above the Blue City of Jodhpur, Mehrangarh Fort is one of India\'s largest forts. Its massive walls and intricately carved palaces house one of the finest collections of Rajput art and artefacts.',
+        imgs: [
+          'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80',
+          'https://images.unsplash.com/photo-1477587458883-47145ed31bfb?w=800&q=80',
+          'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80'
+        ],
+        location: 'Jodhpur, Rajasthan',
+        maps: 'https://maps.google.com/?q=Mehrangarh+Fort+Jodhpur'
+      },
+      {
+        name: 'Jaisalmer Sand Dunes',
+        category: 'Nature',
+        desc: 'The Sam Sand Dunes near Jaisalmer offer a magical desert experience — camel safaris, traditional folk music, and stargazing under a canopy of stars. The golden fort city itself is built entirely of yellow sandstone.',
+        imgs: [
+          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
+          'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'
+        ],
+        location: 'Jaisalmer, Rajasthan',
+        maps: 'https://maps.google.com/?q=Sam+Sand+Dunes+Jaisalmer'
+      }
+    ],
+    comments: ['Rajasthan is pure magic! The forts are awe-inspiring. 🏰', 'Desert camping in Jaisalmer was the highlight of my trip!']
+  },
+  'kerala': {
+    name: 'Kerala',
+    tagline: 'God\'s Own Country',
+    img: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80',
+    desc: 'Kerala enchants with its lush backwaters, verdant hill stations, spice plantations, Ayurvedic wellness, and stunning beaches.',
+    tags: ['Backwaters', 'Beaches', 'Ayurveda', 'Wildlife'],
+    bestTime: 'September – March',
+    budget: '₹3,500 – ₹10,000/day',
+    food: 'Kerala Sadya, Fish Curry, Puttu, Appam with Stew',
+    capital: 'Thiruvananthapuram',
+    language: 'Malayalam',
+    places: [
+      {
+        name: 'Alleppey Backwaters',
+        category: 'Nature',
+        desc: 'Alleppey, called the "Venice of the East", is famous for its network of canals, lagoons and houseboat cruises. Gliding through the serene backwaters on a traditional Kerala houseboat is a bucket-list experience.',
+        imgs: [
+          'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80',
+          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+          'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80'
+        ],
+        location: 'Alappuzha, Kerala',
+        maps: 'https://maps.google.com/?q=Alleppey+Backwaters+Kerala'
+      },
+      {
+        name: 'Munnar Tea Gardens',
+        category: 'Hill Station',
+        desc: 'Munnar\'s rolling hills blanketed with emerald tea gardens, mist, and cool mountain air make it one of South India\'s most scenic destinations. The Eravikulam National Park here shelters the endangered Nilgiri Tahr.',
+        imgs: [
+          'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80',
+          'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'
+        ],
+        location: 'Munnar, Kerala',
+        maps: 'https://maps.google.com/?q=Munnar+Tea+Gardens+Kerala'
+      }
+    ],
+    comments: ['Houseboat stay in Alleppey was dreamy! 🌴', 'Munnar tea estates are so peaceful and green!']
+  },
+  'goa': {
+    name: 'Goa',
+    tagline: 'Beach Paradise of India',
+    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80',
+    desc: 'Goa is India\'s smallest state but biggest draw for beaches, Portuguese heritage, vibrant nightlife, and seafood.',
+    tags: ['Beaches', 'Nightlife', 'Heritage', 'Seafood'],
+    bestTime: 'November – February',
+    budget: '₹2,500 – ₹8,000/day',
+    food: 'Fish Curry Rice, Prawn Balchão, Bebinca, Sorpotel',
+    capital: 'Panaji',
+    language: 'Konkani, English',
+    places: [
+      {
+        name: 'Calangute Beach',
+        category: 'Beach',
+        desc: 'Known as the "Queen of Beaches", Calangute is Goa\'s largest and most popular beach. Stretching 7 km of golden sand, it offers water sports, beach shacks, and a vibrant carnival atmosphere especially during the winter season.',
+        imgs: [
+          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+          'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80',
+          'https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=800&q=80'
+        ],
+        location: 'North Goa',
+        maps: 'https://maps.google.com/?q=Calangute+Beach+Goa'
+      },
+      {
+        name: 'Basilica of Bom Jesus',
+        category: 'UNESCO Heritage',
+        desc: 'This 16th-century Baroque church in Old Goa is one of the finest examples of Baroque architecture in Asia and a UNESCO World Heritage Site. It houses the mortal remains of St. Francis Xavier.',
+        imgs: [
+          'https://images.unsplash.com/photo-1609766857871-6ed3e5a2f10e?w=800&q=80',
+          'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'
+        ],
+        location: 'Old Goa',
+        maps: 'https://maps.google.com/?q=Basilica+of+Bom+Jesus+Goa'
+      }
+    ],
+    comments: ['Goa beaches are amazing! Water sports were super fun! 🏄', 'Sunset at Calangute is pure magic 🌅']
+  },
+  'tamil-nadu': {
+    name: 'Tamil Nadu',
+    tagline: 'Land of Temples & Traditions',
+    img: 'https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=600&q=80',
+    desc: 'Tamil Nadu is home to magnificent Dravidian temples, classical dance, ancient literature, and flavourful cuisine.',
+    tags: ['Temples', 'Culture', 'Classical Arts', 'Food'],
+    bestTime: 'October – February',
+    budget: '₹2,000 – ₹7,000/day',
+    food: 'Idli, Dosa, Chettinad Curry, Filter Coffee, Pongal',
+    capital: 'Chennai',
+    language: 'Tamil',
+    places: [
+      {
+        name: 'Meenakshi Temple, Madurai',
+        category: 'Temple',
+        desc: 'The Meenakshi Amman Temple is a stunning example of Dravidian architecture with 14 gopurams (tower gateways) adorned with thousands of colourful sculptures. The temple complex houses the Golden Lotus Tank and is one of India\'s most visited pilgrimage sites.',
+        imgs: [
+          'https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=800&q=80',
+          'https://images.unsplash.com/photo-1609766857871-6ed3e5a2f10e?w=800&q=80',
+          'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'
+        ],
+        location: 'Madurai, Tamil Nadu',
+        maps: 'https://maps.google.com/?q=Meenakshi+Temple+Madurai'
+      },
+      {
+        name: 'Marina Beach, Chennai',
+        category: 'Beach',
+        desc: 'Marina Beach is the world\'s second longest urban beach stretching over 13 km along Chennai\'s coastline. Early mornings see joggers and families, while evenings fill with street food vendors and colourful kite flyers.',
+        imgs: [
+          'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
+          'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=800&q=80',
+          'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80'
+        ],
+        location: 'Chennai, Tamil Nadu',
+        maps: 'https://maps.google.com/?q=Marina+Beach+Chennai'
+      }
+    ],
+    comments: ['Meenakshi Temple is absolutely divine! 🛕', 'Filter coffee in Tamil Nadu is the best in the world ☕']
+  }
+};
+
+const mapStateData = {
+  'odisha': { key: 'odisha' },
+  'rajasthan': { key: 'rajasthan' },
+  'kerala': { key: 'kerala' },
+  'goa': { key: 'goa' },
+  'tamil-nadu': { key: 'tamil-nadu' },
+  'jammu-kashmir': { name: 'Jammu & Kashmir', tagline: 'Heaven on Earth', desc: 'Known for its breathtaking Kashmir Valley, Gulmarg ski resort, Pahalgam meadows, and the sacred Vaishno Devi shrine.', tags: ['Mountains','Valleys','Spirituality','Adventure'], img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80' },
+  'himachal': { name: 'Himachal Pradesh', tagline: 'Land of Gods', desc: 'Himachal Pradesh offers stunning Himalayan landscapes, adventure sports, Buddhist monasteries, and charming hill stations like Shimla and Manali.', tags: ['Mountains','Adventure','Buddhism','Hill Stations'], img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80' },
+  'maharashtra': { name: 'Maharashtra', tagline: 'Land of Diversity', desc: 'Home to Mumbai, the Ajanta & Ellora Caves, and the Western Ghats, Maharashtra blends modern energy with ancient heritage.', tags: ['Heritage','Beaches','Wildlife','Metro'], img: 'https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=600&q=80' },
+  'west-bengal': { name: 'West Bengal', tagline: 'Cultural Capital of India', desc: 'West Bengal is celebrated for its Durga Puja festivals, Darjeeling tea estates, Sundarbans mangroves, and the city of joy — Kolkata.', tags: ['Culture','Wildlife','Tea','History'], img: 'https://images.unsplash.com/photo-1609766857871-6ed3e5a2f10e?w=600&q=80' }
+};
+
+let currentState = null;
+let likedComments = new Set();
+
+// ===== DARK MODE =====
+const darkToggle = document.getElementById('darkToggle');
+darkToggle.addEventListener('click', () => {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  darkToggle.textContent = isDark ? '🌙' : '☀️';
+});
+
+// ===== HAMBURGER =====
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+
+// ===== TOAST =====
+function showToast(msg, duration = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+// ===== REVEAL ON SCROLL =====
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ===== MAP INTERACTION =====
+document.querySelectorAll('#indiaMap path').forEach(path => {
+  path.addEventListener('mouseenter', () => {
+    const stateName = path.getAttribute('data-name') || '';
+    path.setAttribute('title', stateName);
+  });
+  path.addEventListener('click', () => {
+    const stateKey = path.getAttribute('data-state');
+    showMapPanel(stateKey);
+    document.querySelectorAll('#indiaMap path').forEach(p => p.classList.remove('active'));
+    path.classList.add('active');
+  });
+});
+
+function showMapPanel(stateKey) {
+  const data = mapStateData[stateKey] || statesData[stateKey];
+  if (!data) return;
+  const name = data.name || (statesData[stateKey] && statesData[stateKey].name) || stateKey;
+  const desc = data.desc || (statesData[stateKey] && statesData[stateKey].desc) || 'Explore this beautiful state!';
+  const tags = data.tags || (statesData[stateKey] && statesData[stateKey].tags) || [];
+  const img = data.img || (statesData[stateKey] && statesData[stateKey].img) || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80';
+
+  document.getElementById('mapPanelDefault').style.display = 'none';
+  document.getElementById('mapPanelContent').style.display = 'block';
+  document.getElementById('mapPanelImg').src = img;
+  document.getElementById('mapPanelName').textContent = name;
+  document.getElementById('mapPanelDesc').textContent = desc;
+  document.getElementById('mapPanelTags').innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+  const key = data.key || (statesData[stateKey] ? stateKey : null);
+  const btn = document.getElementById('mapPanelBtn');
+  if (key && statesData[key]) {
+    btn.style.display = 'flex';
+    btn.onclick = () => loadState(key);
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+// ===== STATES GRID =====
+function renderStatesGrid() {
+  const grid = document.getElementById('statesGrid');
+  grid.innerHTML = Object.entries(statesData).map(([key, state]) => `
+    <div class="state-card reveal" onclick="loadState('${key}')">
+      <div class="state-card-img">
+        <img src="${state.img}" alt="${state.name}" loading="lazy">
+        <div class="state-card-img-overlay"></div>
+        <span class="state-card-badge">${state.tags[0]}</span>
+        <div class="state-card-name">${state.name}</div>
+      </div>
+      <div class="state-card-body">
+        <p class="state-card-desc">${state.desc.substring(0, 100)}...</p>
+        <div class="state-card-footer">
+          <span class="state-card-places">📍 ${state.places.length} destinations</span>
+          <button class="btn-sm" onclick="event.stopPropagation();loadState('${key}')">Explore →</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+renderStatesGrid();
+
+// ===== LOAD STATE DETAIL =====
+function loadState(key) {
+  const state = statesData[key];
+  if (!state) { showToast('Coming soon! 🚧'); return; }
+  currentState = key;
+
+  document.getElementById('detailStateName').textContent = state.name;
+  document.getElementById('detailStateTagline').textContent = state.tagline;
+  document.getElementById('detailMeta').innerHTML = `
+    <div class="detail-meta-item">🏛️ <span>Capital: ${state.capital}</span></div>
+    <div class="detail-meta-item">🗣️ <span>Language: ${state.language}</span></div>
+    <div class="detail-meta-item">🏷️ <span>${state.tags.join(' · ')}</span></div>
+  `;
+
+  document.getElementById('infoCards').innerHTML = `
+    <div class="info-card reveal">
+      <div class="info-icon">📅</div>
+      <div><div class="info-label">Best Time to Visit</div><div class="info-value">${state.bestTime}</div><div class="info-sub">Ideal weather conditions for exploring</div></div>
+    </div>
+    <div class="info-card reveal">
+      <div class="info-icon">💰</div>
+      <div><div class="info-label">Estimated Budget</div><div class="info-value">${state.budget}</div><div class="info-sub">Including accommodation & meals</div></div>
+    </div>
+    <div class="info-card reveal">
+      <div class="info-icon">🍽️</div>
+      <div><div class="info-label">Famous Food</div><div class="info-value">Local Cuisine</div><div class="info-sub">${state.food}</div></div>
+    </div>
+  `;
+
+  document.getElementById('placesTitle').textContent = `Must-Visit in ${state.name}`;
+  document.getElementById('placesGrid').innerHTML = state.places.map((place, pi) => `
+    <div class="place-card reveal">
+      <div class="place-card-gallery">
+        <div class="gallery-slides" id="slides-${key}-${pi}" style="transform:translateX(0)">
+          ${place.imgs.map(img => `<div class="gallery-slide"><img src="${img}" alt="${place.name}" loading="lazy"></div>`).join('')}
+        </div>
+        <button class="gallery-btn-prev" onclick="slideGallery('${key}-${pi}', -1, ${place.imgs.length})">‹</button>
+        <button class="gallery-btn-next" onclick="slideGallery('${key}-${pi}', 1, ${place.imgs.length})">›</button>
+        <div class="place-card-overlay"></div>
+        <span class="place-card-category">${place.category}</span>
+        <div class="place-card-title">${place.name}</div>
+        <div class="gallery-controls">${place.imgs.map((_, i) => `<button class="gallery-dot ${i===0?'active':''}" id="dot-${key}-${pi}-${i}" onclick="goToSlide('${key}-${pi}', ${i}, ${place.imgs.length})"></button>`).join('')}</div>
+      </div>
+      <div class="place-card-body">
+        <p class="place-card-desc">${place.desc}</p>
+        <div class="place-card-actions">
+          <a href="${place.maps}" target="_blank" class="btn-maps">📍 Open in Maps</a>
+          <div class="like-dislike">
+            <button class="btn-like" onclick="toggleLike(this, '${key}-place-${pi}-like')">👍 <span>Like</span></button>
+            <button class="btn-dislike" onclick="toggleDislike(this, '${key}-place-${pi}-dislike')">👎</button>
+          </div>
+          <button class="btn-visit want" onclick="toggleVisit(this)">🏷️ Want to Visit</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Load comments
+  const commentsList = document.getElementById('commentsList');
+  const savedComments = JSON.parse(localStorage.getItem(`comments-${key}`) || 'null') || state.comments;
+  commentsList.innerHTML = savedComments.map(c => renderComment(c)).join('');
+
+  const detailSection = document.getElementById('detail-section');
+  detailSection.classList.add('active');
+  setTimeout(() => {
+    detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    detailSection.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  }, 100);
+}
+
+function closeDetail() {
+  document.getElementById('detail-section').classList.remove('active');
+  document.getElementById('states-section').scrollIntoView({ behavior: 'smooth' });
+  currentState = null;
+}
+
+// ===== GALLERY =====
+const galleryState = {};
+function slideGallery(id, dir, total) {
+  if (!galleryState[id]) galleryState[id] = 0;
+  galleryState[id] = (galleryState[id] + dir + total) % total;
+  updateGallery(id, total);
+}
+function goToSlide(id, idx, total) {
+  galleryState[id] = idx;
+  updateGallery(id, total);
+}
+function updateGallery(id, total) {
+  const idx = galleryState[id] || 0;
+  const slides = document.getElementById('slides-' + id);
+  if (slides) slides.style.transform = `translateX(-${idx * 100}%)`;
+  for (let i = 0; i < total; i++) {
+    const dot = document.getElementById(`dot-${id}-${i}`);
+    if (dot) dot.classList.toggle('active', i === idx);
+  }
+}
+
+// ===== LIKE / DISLIKE =====
+function toggleLike(btn, id) {
+  const isActive = btn.classList.toggle('active');
+  btn.querySelector('span').textContent = isActive ? 'Liked!' : 'Like';
+  if (isActive) { showToast('❤️ Added to favourites!'); }
+  // Deactivate dislike sibling
+  const dislike = btn.closest('.like-dislike').querySelector('.btn-dislike');
+  if (dislike) dislike.classList.remove('active');
+}
+function toggleDislike(btn) {
+  btn.classList.toggle('active');
+  const like = btn.closest('.like-dislike').querySelector('.btn-like');
+  if (like) { like.classList.remove('active'); like.querySelector('span').textContent = 'Like'; }
+}
+function toggleVisit(btn) {
+  if (btn.textContent.includes('Want')) {
+    btn.textContent = '✅ Visited!';
+    btn.classList.remove('want'); btn.classList.add('visited');
+    showToast('🎉 Marked as Visited!');
+  } else if (btn.textContent.includes('Visited')) {
+    btn.textContent = '🏷️ Want to Visit';
+    btn.classList.remove('visited'); btn.classList.add('want');
+  }
+}
+
+// ===== COMMENTS =====
+function renderComment(text) {
+  const letter = text.charAt(0).toUpperCase();
+  const colors = ['#c8541a','#2a7a4a','#d4a017','#7a2ac8','#1a6ac8'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  return `
+    <div class="comment-item">
+      <div class="comment-avatar" style="background:${color}">${letter}</div>
+      <div class="comment-content">
+        <div class="comment-author">Anonymous Traveller</div>
+        <div class="comment-text">${text}</div>
+      </div>
+    </div>
+  `;
+}
+function addComment() {
+  const input = document.getElementById('commentInput');
+  const text = input.value.trim();
+  if (!text) { showToast('Please write something first!'); return; }
+  const list = document.getElementById('commentsList');
+  const newComment = document.createElement('div');
+  newComment.innerHTML = renderComment(text);
+  list.prepend(newComment.firstElementChild);
+  input.value = '';
+  showToast('💬 Comment posted!');
+  // Save to localStorage
+  if (currentState) {
+    const existing = JSON.parse(localStorage.getItem(`comments-${currentState}`) || '[]');
+    existing.unshift(text);
+    localStorage.setItem(`comments-${currentState}`, JSON.stringify(existing));
+  }
+}
+document.getElementById('commentInput').addEventListener('keypress', e => { if (e.key === 'Enter') addComment(); });
+
+// ===== FOOTER VOTE =====
+function footerVote(type, btn) {
+  btn.style.background = type === 'like' ? '#4caf50' : '#e57373';
+  btn.style.color = '#fff';
+  showToast(type === 'like' ? '🙏 Thank you for your feedback!' : '📝 We appreciate your honest feedback!');
+}
+
+// ===== SEARCH =====
+const searchInput = document.getElementById('searchInput');
+const searchDropdown = document.getElementById('searchDropdown');
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+  if (!query) { searchDropdown.classList.remove('open'); return; }
+  const results = Object.entries(statesData).filter(([k, v]) =>
+    v.name.toLowerCase().includes(query) || v.tags.some(t => t.toLowerCase().includes(query))
+  );
+  if (results.length === 0) {
+    searchDropdown.innerHTML = '<div class="search-no-results">No states found</div>';
+  } else {
+    searchDropdown.innerHTML = results.map(([key, state]) => `
+      <div class="search-result-item" onclick="searchSelect('${key}')">
+        <img class="search-result-img" src="${state.img}" alt="${state.name}">
+        <div>
+          <div class="search-result-name">${state.name}</div>
+          <div class="search-result-sub">${state.tags.slice(0,2).join(' · ')}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+  searchDropdown.classList.add('open');
+});
+function searchSelect(key) {
+  searchDropdown.classList.remove('open');
+  searchInput.value = '';
+  loadState(key);
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-search-wrapper')) searchDropdown.classList.remove('open');
+});
+
+// ===== NAVBAR SCROLL EFFECT =====
+window.addEventListener('scroll', () => {
+  const nb = document.getElementById('navbar');
+  nb.style.boxShadow = window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,0.12)' : '';
+});
+
+// ===== SMOOTH SCROLL for anchor links =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+// ===== INIT: pre-load Odisha to show rich content =====
+// (user can navigate naturally)
+console.log('🇮🇳 Incredible India Tourism Website – Designed by Anmol Kumar Jha');
+</script>
+</body>
+</html>
